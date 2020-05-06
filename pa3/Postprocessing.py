@@ -17,11 +17,12 @@ from utils import *
 ########################################################
 #help functions
 def in_percentile(perc,pp_rates):
-    for i in range(len(pp_rates)):
+    max = np.amax(pp_rates)
+    for i in range(len(pp_rates)-1):
         x = pp_rates[i]
         y = pp_rates[(i+1)%len(pp_rates)]
         diff = x-y
-        if(not abs(diff)<= x*perc and not abs(diff)<=y*perc):
+        if(not abs(diff)<= max*perc and not abs(diff)<=max*perc):
             return False
     return True
 
@@ -58,7 +59,7 @@ def get_fairness_by_threshold(thresholds,categorical_results):
     for race in categorical_results.keys():
         race_parity_row = []
         threshold = thresholds[race]
-        race_data = categorical_results[race_data]
+        race_data = categorical_results[race]
         for data in race_data:
             if(data[0]>threshold):
                 race_parity_row.append((1,data[1]))
@@ -109,7 +110,7 @@ def enforce_demographic_parity(categorical_results, epsilon):
     counter = 0
     while True:
         counter +=1
-        if(counter>100):
+        if(counter>1000):
             break
         race_pp_rate = []
         rate_map = {}
@@ -125,15 +126,14 @@ def enforce_demographic_parity(categorical_results, epsilon):
             mean = np.mean(race_pp_rate)
             for race_of_rate in rate_map.keys():
                 if(rate_map[race_of_rate]<mean):
-                    if(not thresholds[race_of_rate]-0.005<min_race[race_of_rate]):
-                        thresholds[race_of_rate] -= 0.005
+                    if(not thresholds[race_of_rate]-0.001<min_race[race_of_rate]):
+                        thresholds[race_of_rate] -= 0.001
                 else:
-                    if(not thresholds[race_of_rate]+0.005>max_race[race_of_rate]):
-                        thresholds[race_of_rate] += 0.005
-
+                    if(not thresholds[race_of_rate]+0.001>max_race[race_of_rate]):
+                        thresholds[race_of_rate] += 0.001
+    demographic_parity_data = get_fairness_by_threshold(thresholds,categorical_results)
     #return demographic_parity_data, thresholds
-    # while in_percentile
-    return None, None
+    return demographic_parity_data, thresholds
 
 
 #######################################################################################################################
