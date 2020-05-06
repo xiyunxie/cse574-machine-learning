@@ -131,7 +131,7 @@ def get_num_false_positives(prediction_label_pairs):
 
 @:returns FPR:                      The number of false positives divided by the number of labelled negatives. Will 
                                     return 0 to avoid divide by 0, but in practice there should be no instances of no 
-                                    labelled negatives.
+                                 get_true_positive_rate   labelled negatives.
 """
 
 def get_false_positive_rate(prediction_label_pairs):
