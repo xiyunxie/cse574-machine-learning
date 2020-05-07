@@ -53,6 +53,8 @@ def three_in_range(perc,race_rates):
             return True,[keys[i],keys[i+1],keys[i+2]],mean_in_range
     return False,[],0
 
+
+
 def positive_prediction_rate_with_threshold(race,threshold,demographic_parity_data):
     predicted_positives = 0
     for pair in demographic_parity_data[race]:
@@ -81,6 +83,25 @@ def false_negative_rate_with_threshold(race,threshold,prediction_label_pairs):
 
 def true_positive_rate_with_threshold(race,threshold,prediction_label_pairs):
     return 1-false_negative_rate_with_threshold(race,threshold,prediction_label_pairs)
+
+
+def positive_predictive_rate_with_threshold(race,threshold,prediction_label_pairs):
+    true_positive = 0
+    predicted_positive = 0
+
+    for pair in prediction_label_pairs[race]:
+        prediction = pair[0]
+        label = pair[1]
+        if prediction > threshold and label == 1:
+            true_positive += 1
+        if prediction > threshold :
+            predicted_positive += 1
+
+
+    if predicted_positive != 0:
+        return true_positive / predicted_positive
+    else:
+        return 0
 
 
 def accuracy_with_threshold(race,threshold,demographic_parity_data):
@@ -122,17 +143,17 @@ def enforce_demographic_parity(categorical_results, epsilon):
     for race in categorical_results.keys():
         data_for_a_race = categorical_results[race]
         arr = []
-        min=2
-        max=-2
+        min = 2
+        max = -2
         total_prediction_of_one_prediction = 0
         one_prediction_count = 0
         for data in data_for_a_race:
             arr.append(data[0])
-            if(data[0]<min):
+            if (data[0] < min):
                 min = data[0]
-            if(data[0]>max):
+            if (data[0] > max):
                 max = data[0]
-            if(data[1]==1):
+            if (data[1] == 1):
                 total_prediction_of_one_prediction += data[0]
                 one_prediction_count += 1
         mean_of_one[race] = total_prediction_of_one_prediction / one_prediction_count
@@ -161,9 +182,9 @@ def enforce_demographic_parity(categorical_results, epsilon):
                 for race_of_rate in rate_map.keys():
                     if(not race_of_rate in in_range_races):
                         if(rate_map[race_of_rate]>mean_in_range):
-                            thresholds[race_of_rate] += 0.00005
+                            thresholds[race_of_rate] += 0.00001
                         else:
-                            thresholds[race_of_rate] -= 0.00005
+                            thresholds[race_of_rate] -= 0.00001
 
             else:
                 mean = np.mean(race_pp_rate)
@@ -172,7 +193,7 @@ def enforce_demographic_parity(categorical_results, epsilon):
                         thresholds[race_of_rate] -= 0.0002
 
                     else:
-                        thresholds[race_of_rate] += 0.002
+                        thresholds[race_of_rate] += 0.0002
 
     demographic_parity_data = get_fairness_by_threshold(thresholds,categorical_results)
     #return demographic_parity_data, thresholds
@@ -185,7 +206,7 @@ def enforce_demographic_parity(categorical_results, epsilon):
     Bayes Classifier and SVM you should be able to find a non-trivial solution with epsilon=0.01
 """
 def enforce_equal_opportunity(categorical_results, epsilon):
-
+    # return None,None
     thresholds = {}
     equal_opportunity_data = {}
     min_race = {}
@@ -223,8 +244,7 @@ def enforce_equal_opportunity(categorical_results, epsilon):
             tp_rate = true_positive_rate_with_threshold(race, thresholds[race], categorical_results)
             rate_map[race] = tp_rate
             race_tp_rate.append(tp_rate)
-        if(rate_map["African-American"]<0.385):
-            print("ss")
+
         if (in_percentile(epsilon, race_tp_rate)):
             break
         else:
@@ -234,18 +254,18 @@ def enforce_equal_opportunity(categorical_results, epsilon):
                 for race_of_rate in rate_map.keys():
                     if (not race_of_rate in in_range_races):
                         if (rate_map[race_of_rate] > mean_in_range):
-                            thresholds[race_of_rate] += 0.00005
+                            thresholds[race_of_rate] += 0.00001
                         else:
-                            thresholds[race_of_rate] -= 0.00005
+                            thresholds[race_of_rate] -= 0.00001
 
             else:
                 mean = np.mean(race_tp_rate)
                 for race_of_rate in rate_map.keys():
                     if (rate_map[race_of_rate] < mean):
-                        thresholds[race_of_rate] -= 0.0001
+                        thresholds[race_of_rate] -= 0.0002
 
                     else:
-                        thresholds[race_of_rate] += 0.001
+                        thresholds[race_of_rate] += 0.0002
 
     # Must complete this function!
     #return equal_opportunity_data, thresholds
@@ -258,13 +278,28 @@ def enforce_equal_opportunity(categorical_results, epsilon):
 """
 
 def enforce_maximum_profit(categorical_results):
+    # return None,None
     mp_data = {}
     thresholds = {}
+    max_race_accuracy = {}
+    for race in categorical_results:
+        threshold = 0
+        max_accuracy = 0
+        max_threshold = 0
+        race_data = categorical_results[race]
 
+        while(threshold<1):
+            accuracy = accuracy_with_threshold(race,threshold,categorical_results)
+            if(accuracy>max_accuracy):
+                max_accuracy = accuracy
+                max_threshold = threshold
+            threshold += 0.0001
+        max_race_accuracy[race] = max_accuracy
+        thresholds[race] = max_threshold
     # Must complete this function!
     #return mp_data, thresholds
-
-    return None, None
+    mp_data = get_fairness_by_threshold(thresholds, categorical_results)
+    return mp_data, thresholds
 
 #######################################################################################################################
 """ Determine thresholds such that all groups have the same PPV, and return the best solution
@@ -274,11 +309,71 @@ def enforce_maximum_profit(categorical_results):
 def enforce_predictive_parity(categorical_results, epsilon):
     predictive_parity_data = {}
     thresholds = {}
+    # return None,None
+    all_predictions = {}
+    min_race = {}
+    max_race = {}
+    mean_of_one = {}
+    for race in categorical_results.keys():
+        data_for_a_race = categorical_results[race]
+        arr = []
+        min = 2
+        max = -2
+        total_prediction_of_one_prediction = 0
+        one_prediction_count = 0
+        for data in data_for_a_race:
+            arr.append(data[0])
+            if (data[0] < min):
+                min = data[0]
+            if (data[0] > max):
+                max = data[0]
+            if (data[1] == 1):
+                total_prediction_of_one_prediction += data[0]
+                one_prediction_count += 1
+        mean_of_one[race] = total_prediction_of_one_prediction / one_prediction_count
+        min_race[race] = min
+        max_race[race] = max
+        all_predictions[race] = arr
+        thresholds[race] = mean_of_one[race]
 
+    counter = 0
+    while True:
+        counter += 1
+        if (counter > 10000):
+            break
+        race_pp_rate = []
+        rate_map = {}
+        for race in categorical_results.keys():
+            pp_rate = positive_predictive_rate_with_threshold(race, thresholds[race], categorical_results)
+            rate_map[race] = pp_rate
+            race_pp_rate.append(pp_rate)
+        if (in_percentile(epsilon, race_pp_rate)):
+            break
+        else:
+            # r_map = {'African-American': 0.29560153709725095, 'Caucasian': 0.29571625978811605, 'Hispanic': 0.29936619718309857, 'Other': 0.24404761904761904}
+            has_three_in_range, in_range_races, mean_in_range = three_in_range(epsilon, rate_map)
+            if (has_three_in_range):
+                a = 1+1
+                for race_of_rate in rate_map.keys():
+                    if (not race_of_rate in in_range_races):
+                        if (rate_map[race_of_rate] > mean_in_range):
+                            thresholds[race_of_rate] -= 0.00001
+                        else:
+                            thresholds[race_of_rate] += 0.00001
+
+            else:
+                mean = np.mean(race_pp_rate)
+                for race_of_rate in rate_map.keys():
+                    if (rate_map[race_of_rate] < mean):
+                        thresholds[race_of_rate] += 0.0005
+
+                    else:
+                        thresholds[race_of_rate] -= 0.0005
+    predictive_parity_data = get_fairness_by_threshold(thresholds, categorical_results)
     # Must complete this function!
     #return predictive_parity_data, thresholds
 
-    return None, None
+    return predictive_parity_data, thresholds
 
     ###################################################################################################################
 """ Apply a single threshold to all groups, and return the best solution according to 
@@ -288,8 +383,21 @@ def enforce_predictive_parity(categorical_results, epsilon):
 def enforce_single_threshold(categorical_results):
     single_threshold_data = {}
     thresholds = {}
-
+    max_threshold = 0
+    threshold = 0
+    accuracy_sum_max = 0
+    while (threshold < 1):
+        accuracy_sum = 0
+        for race in categorical_results.keys():
+            accuracy = accuracy_with_threshold(race, threshold, categorical_results)
+            accuracy_sum += accuracy
+        if (accuracy_sum > accuracy_sum_max):
+            accuracy_sum_max = accuracy_sum
+            max_threshold = threshold
+        threshold += 0.0001
+    for race in categorical_results.keys():
+        thresholds[race] = max_threshold
     # Must complete this function!
     #return single_threshold_data, thresholds
-
-    return None, None
+    single_threshold_data = get_fairness_by_threshold(thresholds, categorical_results)
+    return single_threshold_data, thresholds
