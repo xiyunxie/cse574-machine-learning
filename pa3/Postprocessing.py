@@ -161,24 +161,18 @@ def enforce_demographic_parity(categorical_results, epsilon):
                 for race_of_rate in rate_map.keys():
                     if(not race_of_rate in in_range_races):
                         if(rate_map[race_of_rate]>mean_in_range):
-                            thresholds[race_of_rate] += 0.0003
+                            thresholds[race_of_rate] += 0.00005
                         else:
-                            thresholds[race_of_rate] -= 0.0003
-                    # else:
-                    #     if (rate_map[race_of_rate] > mean_in_range):
-                    #         thresholds[race_of_rate] += 0.0001
-                    #     else:
-                    #         thresholds[race_of_rate] -= 0.0001
-
+                            thresholds[race_of_rate] -= 0.00005
 
             else:
                 mean = np.mean(race_pp_rate)
                 for race_of_rate in rate_map.keys():
                     if(rate_map[race_of_rate]<mean):
-                        thresholds[race_of_rate] -= 0.0003
+                        thresholds[race_of_rate] -= 0.0002
 
                     else:
-                        thresholds[race_of_rate] += 0.003
+                        thresholds[race_of_rate] += 0.002
 
     demographic_parity_data = get_fairness_by_threshold(thresholds,categorical_results)
     #return demographic_parity_data, thresholds
@@ -221,7 +215,7 @@ def enforce_equal_opportunity(categorical_results, epsilon):
     counter = 0
     while True:
         counter += 1
-        if (counter > 100000):
+        if (counter > 10000):
             break
         race_tp_rate = []
         rate_map = {}
@@ -229,17 +223,30 @@ def enforce_equal_opportunity(categorical_results, epsilon):
             tp_rate = true_positive_rate_with_threshold(race, thresholds[race], categorical_results)
             rate_map[race] = tp_rate
             race_tp_rate.append(tp_rate)
+        if(rate_map["African-American"]<0.385):
+            print("ss")
         if (in_percentile(epsilon, race_tp_rate)):
             break
         else:
-            mean = np.mean(race_tp_rate)
-            for race_of_rate in rate_map.keys():
-                if (rate_map[race_of_rate] < mean):
-                    if (not thresholds[race_of_rate] - 0.0001 < min_race[race_of_rate]):
+        # r_map = {'African-American': 0.29560153709725095, 'Caucasian': 0.29571625978811605, 'Hispanic': 0.29936619718309857, 'Other': 0.24404761904761904}
+            has_three_in_range, in_range_races, mean_in_range = three_in_range(epsilon, rate_map)
+            if (has_three_in_range):
+                for race_of_rate in rate_map.keys():
+                    if (not race_of_rate in in_range_races):
+                        if (rate_map[race_of_rate] > mean_in_range):
+                            thresholds[race_of_rate] += 0.00005
+                        else:
+                            thresholds[race_of_rate] -= 0.00005
+
+            else:
+                mean = np.mean(race_tp_rate)
+                for race_of_rate in rate_map.keys():
+                    if (rate_map[race_of_rate] < mean):
                         thresholds[race_of_rate] -= 0.0001
-                else:
-                    if (not thresholds[race_of_rate] + 0.0001 > max_race[race_of_rate]):
-                        thresholds[race_of_rate] += 0.0001
+
+                    else:
+                        thresholds[race_of_rate] += 0.001
+
     # Must complete this function!
     #return equal_opportunity_data, thresholds
     equal_opportunity_data = get_fairness_by_threshold(thresholds,categorical_results)
