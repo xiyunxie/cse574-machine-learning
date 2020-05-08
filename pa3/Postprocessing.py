@@ -3,7 +3,7 @@
 # YOU MUST FILL OUT YOUR SECONDARY OPTIMIZATION METRIC (either accuracy or cost)!
 # The metric chosen must be the same for all 5 methods.
 #   Accuracy
-# Chosen Secondary Optimization Metric: #
+# Chosen Secondary Optimization Metric: # Accuracy
 #######################################################################################################################
 
 import numpy as np
@@ -11,7 +11,7 @@ import math
 from utils import *
 import operator
 ########################################################
-#help functions
+#helper functions
 
 #Check if a list of rates are all in range of tolerance
 def in_percentile(perc,rates):
@@ -20,12 +20,12 @@ def in_percentile(perc,rates):
         for j in range(i+1,len(rates)):
             x = rates[i]
             y = rates[j]
-            quotient = x / y
-            if(not (quotient <= 1+perc and quotient >= 1-perc)):
+            diff = abs(x - y)
+            if(not diff <= max*perc):
                 return False
     return True
 
-#check if three rates are in tolerance
+#check if three rates are in tolerance. If so, we will try to modify other rates to prevent their values from jumping around
 def three_in_range(perc,race_rates):
     race_rates = sorted(race_rates.items(), key=operator.itemgetter(1))
     keys = []
@@ -43,10 +43,10 @@ def three_in_range(perc,race_rates):
         num0 = rate_list[i]
         num1 = rate_list[i+1]
         num2 = rate_list[i+2]
-        diff01 = num0/num1
-        diff12 = num1/num2
-        diff02 = num0/num2
-        if((diff01 <= 1+perc and diff01 >= 1-perc) and (diff12 <= 1+perc and diff12 <= 1+perc) and (diff02 <= 1+perc and diff02 >= 1-perc)):
+        diff01 = abs(num0-num1)
+        diff12 = abs(num1-num2)
+        diff02 = abs(num0-num2)
+        if(diff01 <= max*perc and diff02 <= max*perc and diff12 <= max*perc):
             mean_in_range = (num0+num1+num2)/3
             return True,[keys[i],keys[i+1],keys[i+2]],mean_in_range
     return False,[],0
@@ -137,6 +137,11 @@ def get_fairness_by_threshold(thresholds,categorical_results):
     secondary optimization criteria.
 """
 ########################################################
+#We start our initial threshold by looking for the average prediction whose label is one
+#During iteration of thresholds. We always find the threshold whose accuracy is median and
+#use its positive prediction rate as standard, if that rate of another race's threshold
+#is higher than the standard, we want to increase the threshold to make less people be
+#predicted as positive.
 def enforce_demographic_parity(categorical_results, epsilon):
     thresholds = {}
     all_predictions = {}
@@ -215,6 +220,11 @@ def enforce_demographic_parity(categorical_results, epsilon):
     and chooses best solution according to chosen secondary optimization criteria. For the Naive 
     Bayes Classifier and SVM you should be able to find a non-trivial solution with epsilon=0.01
 """
+#We start our initial threshold by looking for the average prediction whose label is one
+#During iteration of thresholds. We always find the threshold whose accuracy is median and
+#use its true positive rate as standard. If that rate of another race's threshold
+#is higher than the standard, we want to increase the threshold to make less people be
+#predicted as positive.
 def enforce_equal_opportunity(categorical_results, epsilon):
 
     thresholds = {}
@@ -263,9 +273,9 @@ def enforce_equal_opportunity(categorical_results, epsilon):
                 for race_of_rate in rate_map.keys():
                     if (not race_of_rate in in_range_races):
                         if (rate_map[race_of_rate] > mean_in_range):
-                            thresholds[race_of_rate] += 0.0005
+                            thresholds[race_of_rate] += 0.0002
                         else:
-                            thresholds[race_of_rate] -= 0.0005
+                            thresholds[race_of_rate] -= 0.0002
 
             else:
                 acc_map = {}
@@ -293,7 +303,8 @@ def enforce_equal_opportunity(categorical_results, epsilon):
 
 """Determines which thresholds to use to achieve the maximum profit or maximum accuracy with the given data
 """
-
+#We start our initial threshold at 0 and look for the thresholds that can make accuracy highest
+#for each race.
 def enforce_maximum_profit(categorical_results):
     mp_data = {}
     thresholds = {}
@@ -321,7 +332,11 @@ def enforce_maximum_profit(categorical_results):
 """ Determine thresholds such that all groups have the same PPV, and return the best solution
     according to chosen secondary optimization criteria
 """
-
+#We start our initial threshold by looking for the average prediction whose label is one
+#During iteration of thresholds. We always find the threshold whose accuracy is median and
+#use its positive predictive rate as standard. If that rate of another race's threshold
+#is higher than the standard, we want to decrease the threshold to make more people be
+#predicted as positive so that the denominator will be greater.
 def enforce_predictive_parity(categorical_results, epsilon):
     predictive_parity_data = {}
     thresholds = {}
@@ -401,7 +416,7 @@ def enforce_predictive_parity(categorical_results, epsilon):
 """ Apply a single threshold to all groups, and return the best solution according to 
     chosen secondary optimization criteria
 """
-
+#We start our initial threshold at 0 and look for a single threshold that can make total accuracy highest
 def enforce_single_threshold(categorical_results):
     single_threshold_data = {}
     thresholds = {}
