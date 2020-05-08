@@ -18,8 +18,8 @@ def in_percentile(perc,rates):
         for j in range(i+1,len(rates)):
             x = rates[i]
             y = rates[j]
-            diff = x - y
-            if(not abs(diff)<= max*perc):
+            quotient = x - y
+            if(not (quotient <= 1+perc and quotient >= 1-perc)):
                 return False
     return True
 
@@ -54,7 +54,7 @@ def positive_prediction_rate_with_threshold(race,threshold,demographic_parity_da
     predicted_positives = 0
     for pair in demographic_parity_data[race]:
         prediction = pair[0]
-        if prediction > threshold:
+        if prediction >= threshold:
             predicted_positives += 1
     prob = predicted_positives / len(demographic_parity_data[race])
     return prob
@@ -183,28 +183,31 @@ def enforce_demographic_parity(categorical_results, epsilon):
                 for race_of_rate in rate_map.keys():
                     if(not race_of_rate in in_range_races):
                         if(rate_map[race_of_rate]>mean_in_range):
-                            thresholds[race_of_rate] += 0.00002
+                            thresholds[race_of_rate] += 0.0005
                         else:
-                            thresholds[race_of_rate] -= 0.00002
-
-            else:
-                max_acc = 0
-                max_acc_race = ""
-                for race in categorical_results.keys():
-                    acc_of_race = accuracy_with_threshold(race,thresholds[race],categorical_results)
-                    if(acc_of_race>max_acc):
-                        max_acc = acc_of_race
-                        max_acc_race = race
-                mean = rate_map[max_acc_race]
-                # mean = np.mean(race_pp_rate)
-                for race_of_rate in rate_map.keys():
-                    if(not race_of_rate==max_acc_race):
-                        if(rate_map[race_of_rate]<mean):
                             thresholds[race_of_rate] -= 0.0005
 
-                        else:
-                            thresholds[race_of_rate] += 0.0005
+            else:
 
+                acc_map = {}
+                for race in categorical_results.keys():
+                    acc_of_race = accuracy_with_threshold(race,thresholds[race],categorical_results)
+                    acc_map[race] = acc_of_race
+                sort_map = sorted(acc_map.items(), key=lambda x: x[1])
+                sort_key = list(sort_map)
+                median_race = sort_key[len(sort_key) // 2][0]
+                median = rate_map[median_race]
+                # median = rate_map[sort_key[len(sort_key)//2][0]]
+                # mean = np.mean(race_pp_rate)
+                for race_of_rate in rate_map.keys():
+                    if(not race_of_rate==median_race):
+                        if(rate_map[race_of_rate]<median):
+                            thresholds[race_of_rate] -= 0.005
+
+                        else:
+                            thresholds[race_of_rate] += 0.005
+    for race in categorical_results.keys():
+        print(positive_prediction_rate_with_threshold(race,thresholds[race],categorical_results))
     demographic_parity_data = get_fairness_by_threshold(thresholds,categorical_results)
     #return demographic_parity_data, thresholds
     return demographic_parity_data, thresholds
@@ -264,26 +267,28 @@ def enforce_equal_opportunity(categorical_results, epsilon):
                 for race_of_rate in rate_map.keys():
                     if (not race_of_rate in in_range_races):
                         if (rate_map[race_of_rate] > mean_in_range):
-                            thresholds[race_of_rate] += 0.00005
+                            thresholds[race_of_rate] += 0.0005
                         else:
-                            thresholds[race_of_rate] -= 0.00005
+                            thresholds[race_of_rate] -= 0.0005
 
             else:
-                max_acc = 0
-                max_acc_race = ""
+                acc_map = {}
                 for race in categorical_results.keys():
                     acc_of_race = accuracy_with_threshold(race, thresholds[race], categorical_results)
-                    if (acc_of_race > max_acc):
-                        max_acc = acc_of_race
-                        max_acc_race = race
-                mean = rate_map[max_acc_race]
-                # mean = np.mean(race_tp_rate)
+                    acc_map[race] = acc_of_race
+                sort_map = sorted(acc_map.items(), key=lambda x: x[1])
+                sort_key = list(sort_map)
+                median_race = sort_key[len(sort_key) // 2][0]
+                median = rate_map[median_race]
+                # median = rate_map[sort_key[len(sort_key) // 2][0]]
+                # mean = np.mean(race_pp_rate)
                 for race_of_rate in rate_map.keys():
-                    if (rate_map[race_of_rate] < mean):
-                        thresholds[race_of_rate] -= 0.0002
+                    if (not race_of_rate == median_race):
+                        if (rate_map[race_of_rate] < median):
+                            thresholds[race_of_rate] -= 0.005
 
-                    else:
-                        thresholds[race_of_rate] += 0.0002
+                        else:
+                            thresholds[race_of_rate] += 0.005
 
     # Must complete this function!
     #return equal_opportunity_data, thresholds
@@ -375,26 +380,27 @@ def enforce_predictive_parity(categorical_results, epsilon):
                 for race_of_rate in rate_map.keys():
                     if (not race_of_rate in in_range_races):
                         if (rate_map[race_of_rate] > mean_in_range):
-                            thresholds[race_of_rate] -= 0.00001
+                            thresholds[race_of_rate] -= 0.0002
                         else:
-                            thresholds[race_of_rate] += 0.00001
+                            thresholds[race_of_rate] += 0.0002
 
             else:
-                max_acc = 0
-                max_acc_race = ""
+                acc_map = {}
                 for race in categorical_results.keys():
                     acc_of_race = accuracy_with_threshold(race, thresholds[race], categorical_results)
-                    if (acc_of_race > max_acc):
-                        max_acc = acc_of_race
-                        max_acc_race = race
-                mean = rate_map[max_acc_race]
+                    acc_map[race] = acc_of_race
+                sort_map = sorted(acc_map.items(), key=lambda x: x[1])
+                sort_key = list(sort_map)
+                median_race = sort_key[len(sort_key) // 2][0]
+                median = rate_map[median_race]
                 # mean = np.mean(race_pp_rate)
                 for race_of_rate in rate_map.keys():
-                    if (rate_map[race_of_rate] < mean):
-                        thresholds[race_of_rate] += 0.0005
+                    if (not race_of_rate == median_race):
+                        if (rate_map[race_of_rate] < median):
+                            thresholds[race_of_rate] += 0.0005
 
-                    else:
-                        thresholds[race_of_rate] -= 0.0005
+                        else:
+                            thresholds[race_of_rate] -= 0.0005
     predictive_parity_data = get_fairness_by_threshold(thresholds, categorical_results)
     # Must complete this function!
     #return predictive_parity_data, thresholds
