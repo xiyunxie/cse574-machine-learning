@@ -206,8 +206,7 @@ def enforce_demographic_parity(categorical_results, epsilon):
 
                         else:
                             thresholds[race_of_rate] += 0.005
-    for race in categorical_results.keys():
-        print(positive_prediction_rate_with_threshold(race,thresholds[race],categorical_results))
+
     demographic_parity_data = get_fairness_by_threshold(thresholds,categorical_results)
     #return demographic_parity_data, thresholds
     return demographic_parity_data, thresholds
