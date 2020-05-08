@@ -205,10 +205,10 @@ def enforce_demographic_parity(categorical_results, epsilon):
                 for race_of_rate in rate_map.keys():
                     if(not race_of_rate==median_race):
                         if(rate_map[race_of_rate]<median):
-                            thresholds[race_of_rate] -= 0.005
+                            thresholds[race_of_rate] -= 0.001
 
                         else:
-                            thresholds[race_of_rate] += 0.005
+                            thresholds[race_of_rate] += 0.001
 
     demographic_parity_data = get_fairness_by_threshold(thresholds,categorical_results)
     #return demographic_parity_data, thresholds
@@ -317,10 +317,10 @@ def enforce_maximum_profit(categorical_results):
 
         while(threshold<1):
             accuracy = accuracy_with_threshold(race,threshold,categorical_results)
-            if(accuracy>max_accuracy):
+            if(accuracy>=max_accuracy):
                 max_accuracy = accuracy
                 max_threshold = threshold
-            threshold += 0.0001
+            threshold += 0.00005
         max_race_accuracy[race] = max_accuracy
         thresholds[race] = max_threshold
     # Must complete this function!
