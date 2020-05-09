@@ -43,12 +43,12 @@ training_race_cases = get_cases_by_metric(training_data, categories, "race", map
 test_race_cases = get_cases_by_metric(test_data, categories, "race", mappings, test_predictions, test_labels)
 
 print("")
-ROC_curves = []
-for group in test_race_cases.keys():
-    ROC_data = get_ROC_data(total_race_cases[group],group)
-    ROC_curves.append(ROC_data)
-
-plot_ROC_data(ROC_curves)
+# ROC_curves = []
+# for group in test_race_cases.keys():
+#     ROC_data = get_ROC_data(total_race_cases[group],group)
+#     ROC_curves.append(ROC_data)
+#
+# plot_ROC_data(ROC_curves)
 
 training_race_cases, thresholds = enforce_maximum_profit(training_race_cases)
 

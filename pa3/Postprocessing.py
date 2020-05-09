@@ -273,9 +273,9 @@ def enforce_equal_opportunity(categorical_results, epsilon):
                 for race_of_rate in rate_map.keys():
                     if (not race_of_rate in in_range_races):
                         if (rate_map[race_of_rate] > mean_in_range):
-                            thresholds[race_of_rate] += 0.0002
+                            thresholds[race_of_rate] += 0.00005
                         else:
-                            thresholds[race_of_rate] -= 0.0002
+                            thresholds[race_of_rate] -= 0.00005
 
             else:
                 acc_map = {}
@@ -289,10 +289,10 @@ def enforce_equal_opportunity(categorical_results, epsilon):
                 for race_of_rate in rate_map.keys():
                     if (not race_of_rate == median_race):
                         if (rate_map[race_of_rate] < median):
-                            thresholds[race_of_rate] -= 0.0005
+                            thresholds[race_of_rate] -= 0.0001
 
                         else:
-                            thresholds[race_of_rate] += 0.0005
+                            thresholds[race_of_rate] += 0.0001
 
     # Must complete this function!
     #return equal_opportunity_data, thresholds
@@ -386,9 +386,9 @@ def enforce_predictive_parity(categorical_results, epsilon):
                 for race_of_rate in rate_map.keys():
                     if (not race_of_rate in in_range_races):
                         if (rate_map[race_of_rate] > mean_in_range):
-                            thresholds[race_of_rate] -= 0.0002
+                            thresholds[race_of_rate] -= 0.0005
                         else:
-                            thresholds[race_of_rate] += 0.0002
+                            thresholds[race_of_rate] += 0.0005
 
             else:
                 acc_map = {}
@@ -402,10 +402,10 @@ def enforce_predictive_parity(categorical_results, epsilon):
                 for race_of_rate in rate_map.keys():
                     if (not race_of_rate == median_race):
                         if (rate_map[race_of_rate] < median):
-                            thresholds[race_of_rate] += 0.005
+                            thresholds[race_of_rate] += 0.001
 
                         else:
-                            thresholds[race_of_rate] -= 0.005
+                            thresholds[race_of_rate] -= 0.001
     predictive_parity_data = get_fairness_by_threshold(thresholds, categorical_results)
     # Must complete this function!
     #return predictive_parity_data, thresholds

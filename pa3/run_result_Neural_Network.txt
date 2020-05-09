@@ -1,202 +1,200 @@
 Attempting to enforce demographic parity...
 --------------------DEMOGRAPHIC PARITY RESULTS--------------------
 
-Probability of positive prediction for African-American: 0.37984037836240025
-Probability of positive prediction for Caucasian: 0.4048825426070935
-Probability of positive prediction for Hispanic: 0.36795774647887325
-Probability of positive prediction for Other: 0.3898809523809524
+Probability of positive prediction for African-American: 0.36018957345971564
+Probability of positive prediction for Caucasian: 0.3671178099046447
+Probability of positive prediction for Hispanic: 0.3641207815275311
+Probability of positive prediction for Other: 0.363905325443787
 
-Accuracy for African-American: 0.562518474726574
-Accuracy for Caucasian: 0.5914325195762321
-Accuracy for Hispanic: 0.6426056338028169
-Accuracy for Other: 0.6666666666666666
+Accuracy for African-American: 0.5488744075829384
+Accuracy for Caucasian: 0.5933558904952322
+Accuracy for Hispanic: 0.6429840142095915
+Accuracy for Other: 0.6449704142011834
 
-FPR for African-American: 0.291497975708502
-FPR for Caucasian: 0.33195020746887965
-FPR for Hispanic: 0.26785714285714285
-FPR for Other: 0.270935960591133
+FPR for African-American: 0.2840677966101695
+FPR for Caucasian: 0.27376191940941247
+FPR for Hispanic: 0.2628398791540785
+FPR for Other: 0.2682926829268293
 
-FNR for African-American: 0.5512887953708574
-FNR for Caucasian: 0.5041407867494824
-FNR for Hispanic: 0.4870689655172414
-FNR for Other: 0.42857142857142855
+FNR for African-American: 0.5807469752761705
+FNR for Caucasian: 0.539526299600123
+FNR for Hispanic: 0.49137931034482757
+FNR for Other: 0.48872180451127817
 
-TPR for African-American: 0.4487112046291426
-TPR for Caucasian: 0.4958592132505176
-TPR for Hispanic: 0.5129310344827587
-TPR for Other: 0.5714285714285714
+TPR for African-American: 0.4192530247238295
+TPR for Caucasian: 0.460473700399877
+TPR for Hispanic: 0.5086206896551724
+TPR for Other: 0.5112781954887218
 
-TNR for African-American: 0.708502024291498
-TNR for Caucasian: 0.6680497925311204
-TNR for Hispanic: 0.7321428571428572
-TNR for Other: 0.729064039408867
+TNR for African-American: 0.7159322033898305
+TNR for Caucasian: 0.7262380805905875
+TNR for Hispanic: 0.7371601208459215
+TNR for Other: 0.7317073170731707
 
-Threshold for African-American: 0.5921064881855786
-Threshold for Caucasian: 0.5626196791728338
-Threshold for Hispanic: 0.49627907676943417
-Threshold for Other: 0.4045839872037557
+Threshold for African-American: 0.5957975186335922
+Threshold for Caucasian: 0.5881581794649442
+Threshold for Hispanic: 0.5131354931870411
+Threshold for Other: 0.5376145105810094
 
 Total cost: 
-$-492,328,042
-Total accuracy: 0.5847011458655931
+$-835,196,598
+Total accuracy: 0.5836348455329808
 -----------------------------------------------------------------
 
 Attempting to enforce equal opportunity...
 --------------------EQUAL OPPORTUNITY RESULTS--------------------
 
-Accuracy for African-American: 0.5737511084835945
-Accuracy for Caucasian: 0.5914325195762321
-Accuracy for Hispanic: 0.6426056338028169
-Accuracy for Other: 0.6607142857142857
+Accuracy for African-American: 0.5690165876777251
+Accuracy for Caucasian: 0.5864349430944324
+Accuracy for Hispanic: 0.6412078152753108
+Accuracy for Other: 0.6420118343195266
 
-FPR for African-American: 0.3259109311740891
-FPR for Caucasian: 0.33195020746887965
-FPR for Hispanic: 0.26785714285714285
-FPR for Other: 0.2413793103448276
+FPR for African-American: 0.36135593220338985
+FPR for Caucasian: 0.3355890495232236
+FPR for Hispanic: 0.2628398791540785
+FPR for Other: 0.2682926829268293
 
-FNR for African-American: 0.5044713308784851
-FNR for Caucasian: 0.5041407867494824
-FNR for Hispanic: 0.4870689655172414
-FNR for Other: 0.48872180451127817
+FNR for African-American: 0.4850078905839032
+FNR for Caucasian: 0.4915410642879114
+FNR for Hispanic: 0.4956896551724138
+FNR for Other: 0.49624060150375937
 
-TPR for African-American: 0.49552866912151494
-TPR for Caucasian: 0.4958592132505176
-TPR for Hispanic: 0.5129310344827587
-TPR for Other: 0.5112781954887218
+TPR for African-American: 0.5149921094160967
+TPR for Caucasian: 0.5084589357120886
+TPR for Hispanic: 0.5043103448275862
+TPR for Other: 0.5037593984962406
 
-TNR for African-American: 0.6740890688259109
-TNR for Caucasian: 0.6680497925311204
-TNR for Hispanic: 0.7321428571428572
-TNR for Other: 0.7586206896551724
+TNR for African-American: 0.6386440677966101
+TNR for Caucasian: 0.6644109504767763
+TNR for Hispanic: 0.7371601208459215
+TNR for Other: 0.7317073170731707
 
-Threshold for African-American: 0.5721064881855786
-Threshold for Caucasian: 0.5626196791728338
-Threshold for Hispanic: 0.49627907676943417
-Threshold for Other: 0.5245839872037558
+Threshold for African-American: 0.5877975186335923
+Threshold for Caucasian: 0.5861581794649445
+Threshold for Hispanic: 0.5201354931870411
+Threshold for Other: 0.5456145105810094
 
 Total cost: 
-$-486,797,848
-Total accuracy: 0.5902756271291422
+$-829,345,914
+Total accuracy: 0.5855830782076259
 -----------------------------------------------------------------
 
 Attempting to enforce maximum profit...
 --------------------MAXIMUM PROFIT RESULTS--------------------
 
-Accuracy for African-American: 0.6509015666568134
-Accuracy for Caucasian: 0.619530170428374
-Accuracy for Hispanic: 0.6461267605633803
-Accuracy for Other: 0.6785714285714286
+Accuracy for African-American: 0.6489928909952607
+Accuracy for Caucasian: 0.641187326976315
+Accuracy for Hispanic: 0.650088809946714
+Accuracy for Other: 0.6745562130177515
 
-FPR for African-American: 0.5182186234817814
-FPR for Caucasian: 0.3950207468879668
-FPR for Hispanic: 0.3125
-FPR for Other: 0.09359605911330049
+FPR for African-American: 0.5206779661016949
+FPR for Caucasian: 0.4337127037834512
+FPR for Hispanic: 0.14803625377643503
+FPR for Other: 0.1024390243902439
 
-FNR for African-American: 0.21725407680168332
-FNR for Caucasian: 0.36231884057971014
-FNR for Hispanic: 0.41379310344827586
+FNR for African-American: 0.2193582325092057
+FNR for Caucasian: 0.28391264226391877
+FNR for Hispanic: 0.6379310344827587
 FNR for Other: 0.6691729323308271
 
-TPR for African-American: 0.7827459231983167
-TPR for Caucasian: 0.6376811594202898
-TPR for Hispanic: 0.5862068965517242
+TPR for African-American: 0.7806417674907943
+TPR for Caucasian: 0.7160873577360812
+TPR for Hispanic: 0.3620689655172413
 TPR for Other: 0.3308270676691729
 
-TNR for African-American: 0.4817813765182186
-TNR for Caucasian: 0.6049792531120333
-TNR for Hispanic: 0.6875
-TNR for Other: 0.9064039408866995
+TNR for African-American: 0.4793220338983051
+TNR for Caucasian: 0.5662872962165488
+TNR for Hispanic: 0.851963746223565
+TNR for Other: 0.8975609756097561
 
-Threshold for African-American: 0.42069999999997
-Threshold for Caucasian: 0.42049999999997
-Threshold for Hispanic: 0.4140999999999707
-Threshold for Other: 0.5952999999999508
+Threshold for African-American: 0.43399999999996036
+Threshold for Caucasian: 0.4309999999999607
+Threshold for Hispanic: 0.592399999999943
+Threshold for Other: 0.6213999999999398
 
 Total cost: 
-$-436,708,888
-Total accuracy: 0.6413750387116754
+$-733,637,466
+Total accuracy: 0.6451433342610632
 -----------------------------------------------------------------
 
 Attempting to enforce predictive parity...
 --------------------PREDICTIVE PARITY RESULTS--------------------
 
-Accuracy for African-American: 0.5758202778598877
-Accuracy for Caucasian: 0.6001842468908337
-Accuracy for Hispanic: 0.6426056338028169
-Accuracy for Other: 0.6607142857142857
+Accuracy for African-American: 0.5787914691943128
+Accuracy for Caucasian: 0.5985850507536142
+Accuracy for Hispanic: 0.6429840142095915
+Accuracy for Other: 0.6479289940828402
 
-PPV for African-American: 0.5709068776628119
-PPV for Caucasian: 0.5704022988505747
-PPV for Hispanic: 0.569377990430622
+PPV for African-American: 0.5745873559638742
+PPV for Caucasian: 0.5702081051478641
+PPV for Hispanic: 0.5741626794258373
 PPV for Other: 0.5714285714285714
 
-FPR for African-American: 0.951417004048583
-FPR for Caucasian: 0.24813278008298756
-FPR for Hispanic: 0.26785714285714285
-FPR for Other: 0.28078817733990147
+FPR for African-American: 0.9261016949152543
+FPR for Caucasian: 0.6035066133497385
+FPR for Hispanic: 0.2688821752265861
+FPR for Other: 0.2048780487804878
 
-FNR for African-American: 0.013150973172014729
-FNR for Caucasian: 0.5890269151138716
-FNR for Hispanic: 0.4870689655172414
-FNR for Other: 0.42857142857142855
+FNR for African-American: 0.029458179905312992
+FNR for Caucasian: 0.1993232851430329
+FNR for Hispanic: 0.4827586206896552
+FNR for Other: 0.5789473684210527
 
-TPR for African-American: 0.9868490268279853
-TPR for Caucasian: 0.4109730848861284
-TPR for Hispanic: 0.5129310344827587
-TPR for Other: 0.5714285714285714
+TPR for African-American: 0.970541820094687
+TPR for Caucasian: 0.8006767148569671
+TPR for Hispanic: 0.5172413793103448
+TPR for Other: 0.42105263157894735
 
-TNR for African-American: 0.04858299595141702
-TNR for Caucasian: 0.7518672199170124
-TNR for Hispanic: 0.7321428571428572
-TNR for Other: 0.7192118226600985
+TNR for African-American: 0.07389830508474571
+TNR for Caucasian: 0.39649338665026146
+TNR for Hispanic: 0.7311178247734139
+TNR for Other: 0.7951219512195122
 
-Threshold for African-American: 0.36090648818559257
-Threshold for Caucasian: 0.5776196791728266
-Threshold for Hispanic: 0.49627907676943417
-Threshold for Other: 0.3985839872037557
+Threshold for African-American: 0.385797518633592
+Threshold for Caucasian: 0.4141581794649444
+Threshold for Hispanic: 0.46313549318704106
+Threshold for Other: 0.5886145105810096
 
 Total cost: 
-$-475,518,184
-Total accuracy: 0.5943016413750387
+$-797,597,334
+Total accuracy: 0.5962519714259208
 -----------------------------------------------------------------
 
 Attempting to enforce single threshold...
 --------------------SINGLE THRESHOLD RESULTS--------------------
 
-Accuracy for African-American: 0.6509015666568134
-Accuracy for Caucasian: 0.619530170428374
-Accuracy for Hispanic: 0.6408450704225352
-Accuracy for Other: 0.6607142857142857
+Accuracy for African-American: 0.6489928909952607
+Accuracy for Caucasian: 0.6401107351584128
+Accuracy for Hispanic: 0.6465364120781527
+Accuracy for Other: 0.650887573964497
 
-FPR for African-American: 0.5182186234817814
-FPR for Caucasian: 0.3950207468879668
-FPR for Hispanic: 0.27976190476190477
-FPR for Other: 0.2512315270935961
+FPR for African-American: 0.5233898305084745
+FPR for Caucasian: 0.4377114733928022
+FPR for Hispanic: 0.311178247734139
+FPR for Other: 0.2975609756097561
 
 FNR for African-American: 0.21725407680168332
-FNR for Caucasian: 0.36231884057971014
-FNR for Hispanic: 0.47413793103448276
-FNR for Other: 0.47368421052631576
+FNR for Caucasian: 0.2820670562903722
+FNR for Hispanic: 0.41379310344827586
+FNR for Other: 0.42857142857142855
 
 TPR for African-American: 0.7827459231983167
-TPR for Caucasian: 0.6376811594202898
-TPR for Hispanic: 0.5258620689655172
-TPR for Other: 0.5263157894736843
+TPR for Caucasian: 0.7179329437096278
+TPR for Hispanic: 0.5862068965517242
+TPR for Other: 0.5714285714285714
 
-TNR for African-American: 0.4817813765182186
-TNR for Caucasian: 0.6049792531120333
-TNR for Hispanic: 0.7202380952380952
-TNR for Other: 0.7487684729064039
+TNR for African-American: 0.47661016949152546
+TNR for Caucasian: 0.5622885266071977
+TNR for Hispanic: 0.6888217522658611
+TNR for Other: 0.7024390243902439
 
-Threshold for African-American: 0.42069999999997
-Threshold for Caucasian: 0.42069999999997
-Threshold for Hispanic: 0.42069999999997
-Threshold for Other: 0.42069999999997
+Threshold for African-American: 0.4277999999999692
+Threshold for Caucasian: 0.4277999999999692
+Threshold for Hispanic: 0.4277999999999692
+Threshold for Other: 0.4277999999999692
 
 Total cost: 
-$-437,798,284
-Total accuracy: 0.6399814183957881
+$-735,046,794
+Total accuracy: 0.6435661935244457
 -----------------------------------------------------------------
-Postprocessing took approximately: 0:00:32.748995 seconds
-
-Process finished with exit code 0
+Postprocessing took approximately: 0:00:38.464902 seconds
